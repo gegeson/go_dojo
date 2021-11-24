@@ -1,0 +1,1 @@
+find ./sample -name \*.jpg | xargs rm

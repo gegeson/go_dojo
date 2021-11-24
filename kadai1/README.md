@@ -17,3 +17,7 @@
 - ユーザ定義型を作ってみる
 - GoDoc を生成してみる
 - Go Modules を使ってみる
+
+### 参考 code
+
+- [[Go] 画像の拡張子の変更をする CLI コマンドを作る](https://github.com/marnysan111/gopherdojo-studyroom/tree/kadai1-marny/kadai1/marny)

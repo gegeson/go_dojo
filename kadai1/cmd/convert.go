@@ -10,17 +10,25 @@ import (
 	"path/filepath"
 )
 
-// 変換前のファイルを削除する
-func removeSrc(src string) error {
-    err := os.Remove(src)
-    if err != nil {
-        return err
-    }
-    return nil
+const (
+	JPG = "jpg"
+	JPEG = "jpeg"
+	PNG = "png"
+	GIF = "gif"
+)
+
+func ExtensionCheck(ext string) error {
+	switch ext {
+	case JPG, JPEG, PNG, GIF:
+		return nil
+	default:
+		return errors
+	}
 }
 
+
 // 画像の拡張子を変換する
-func Convert(src, dst string, rmsrc bool) error {
+func Convert(src, dst string) error {
 	fmt.Fprintln(os.Stdout, "start convert")
 
     // 変換前のファイルを読み取り専用で開く
@@ -58,11 +66,5 @@ func Convert(src, dst string, rmsrc bool) error {
         return err
     }
 
-    // 変換前のファイル削除
-    if rmsrc {
-        if err = removeSrc(src); err != nil {
-            return err
-        }
-     }
     return nil
 }
