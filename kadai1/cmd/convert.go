@@ -1,7 +1,7 @@
 package convert
 
 import (
-	"fmt"
+	"errors"
 	"image"
 	"image/gif"
 	"image/jpeg"
@@ -22,48 +22,44 @@ func ExtensionCheck(ext string) error {
 	case JPG, JPEG, PNG, GIF:
 		return nil
 	default:
-		return errors
+		return errors.New("存在しない拡張子です: " + ext)
 	}
 }
 
 
 // 画像の拡張子を変換する
-func Convert(src, dst string) error {
-	fmt.Fprintln(os.Stdout, "start convert")
-
-    // 変換前のファイルを読み取り専用で開く
-    sf, err := os.Open(src)
+func Convert(path string) error {
+    src, err := os.Open(path)
     if err != nil {
         return err
     }
-    defer sf.Close()
+    defer src.Close()
 
-    // image.Imageへとデコード
-    img, _, err := image.Decode(sf)
+    dest, err := os.Create(path[:len(path)-4] + ".jpg")
     if err != nil {
         return err
     }
+    defer dest.Close()
 
-    // 読み書き用ファイルを作成
-    df, err := os.Create(dst)
+    img, _, err := image.Decode(src)
     if err != nil {
-        return err
+        return errors.New("Decode失敗")
     }
-    defer df.Close()
+
 
     // .以降を取り出して条件分岐 その後image.Imageからエンコード
-    switch filepath.Ext(dst) {
+    switch filepath.Ext(path) {
     case ".png":
-        err = png.Encode(df, img)
+        err = png.Encode(dest, img)
     case ".jpg", ".jpeg":
        // 第三引数は画質で1~100まで。（今回は定数を使用:75)
-        err = jpeg.Encode(df, img, &jpeg.Options{Quality: jpeg.DefaultQuality})
+        err = jpeg.Encode(dest, img, &jpeg.Options{Quality: jpeg.DefaultQuality})
     case ".gif":
-        err = gif.Encode(df, img, nil)
+        err = gif.Encode(dest, img, nil)
     }
 
     if err != nil {
-        return err
+        return errors.New("Encode失敗")
     }
 
     return nil
