@@ -17,16 +17,6 @@ const (
 	GIF = "gif"
 )
 
-func ExtensionCheck(ext string) error {
-	switch ext {
-	case JPG, JPEG, PNG, GIF:
-		return nil
-	default:
-		return errors.New("存在しない拡張子です: " + ext)
-	}
-}
-
-
 // 画像の拡張子を変換する
 func Convert(path string) error {
     src, err := os.Open(path)
