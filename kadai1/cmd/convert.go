@@ -7,7 +7,6 @@ import (
 	"image/jpeg"
 	"image/png"
 	"os"
-	"path/filepath"
 	"strings"
 )
 
@@ -40,7 +39,7 @@ func Convert(path string, from string, to string) error {
 
 
     // .以降を取り出して条件分岐 その後image.Imageからエンコード
-    switch filepath.Ext(path) {
+    switch to {
     case ".png":
         err = png.Encode(dest, img)
     case ".jpg", ".jpeg":
