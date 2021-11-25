@@ -2,7 +2,7 @@ package main
 
 import (
 	"convert"
-	"errors"
+	"flag"
 	"fmt"
 	"io/fs"
 	"os"
@@ -10,37 +10,31 @@ import (
 )
 
 func main() {
-    if err := run(os.Args); err != nil {
-        fmt.Fprintln(os.Stderr, "Error: ", err)
-        os.Exit(1)
-    }
-}
+    from := flag.String("f", ".jpg", "extention before convert")
+	to := flag.String("t", ".png", "extention after convert")
+	dir := flag.String("d", ".", "target dir")
+	flag.Parse()
 
-func run(args []string) error {
-    // ディレクトリ名が引数にあるかどうか
-    if len(args) <= 1 {
-        return errors.New("ディレクトリを指定してください")
-    }
-
-    err := filepath.WalkDir(os.Args[1], func(path string, info fs.DirEntry, err error) error {
+    err := filepath.WalkDir(*dir, func(path string, info fs.DirEntry, err error) error {
         if err != nil {
             return err
         }
-        // ディレクトリは除く
-        if info.IsDir() || filepath.Ext(path) != ".png" {
+
+        // ディレクトリ・対象ファイルがない場合は除く
+        if info.IsDir() || filepath.Ext(path) != *from {
             return nil
         }
         
-        fmt.Println(path, info)
-        if err := convert.Convert(path); err != nil {
+        // fmt.Println(path, info)
+        if err := convert.Convert(path, *from, *to); err != nil {
             return err
         }
         return nil
     })
 
     if err != nil {
-        return err
+        fmt.Fprintln(os.Stderr, "Error: ", err)
+        os.Exit(1)
     }
-
-    return nil
+    
 }

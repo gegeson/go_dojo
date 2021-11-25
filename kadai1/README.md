@@ -17,20 +17,19 @@
 - ユーザ定義型を作ってみる
 - GoDoc を生成してみる
 - Go Modules を使ってみる
+- test も実装
 
 ### command
 
 ```
 # 実行
-go run main.go sample
+go run main.go -d sample -f .png -t .jpg
 
 # 作成した画像消去
 sh remove.sh
 ```
 
 ### 備考
-
-あとコマンドにフラグを追加して、拡張子の指定をできるようにする
 
 ### 参考 code
 

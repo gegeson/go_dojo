@@ -8,6 +8,7 @@ import (
 	"image/png"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 const (
@@ -18,14 +19,15 @@ const (
 )
 
 // 画像の拡張子を変換する
-func Convert(path string) error {
+func Convert(path string, from string, to string) error {
     src, err := os.Open(path)
     if err != nil {
         return err
     }
     defer src.Close()
 
-    dest, err := os.Create(path[:len(path)-4] + ".jpg")
+    output := strings.Replace(path, from, "", 1)
+    dest, err := os.Create(output + to)
     if err != nil {
         return err
     }
