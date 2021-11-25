@@ -28,6 +28,10 @@ go run main.go sample
 sh remove.sh
 ```
 
+### 備考
+
+あとコマンドにフラグを追加して、拡張子の指定をできるようにする
+
 ### 参考 code
 
 - [[Go] 画像の拡張子の変更をする CLI コマンドを作る](https://github.com/marnysan111/gopherdojo-studyroom/tree/kadai1-marny/kadai1/marny)

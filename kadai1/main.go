@@ -26,7 +26,7 @@ func run(args []string) error {
         if err != nil {
             return err
         }
-
+        // ディレクトリは除く
         if info.IsDir() || filepath.Ext(path) != ".png" {
             return nil
         }
