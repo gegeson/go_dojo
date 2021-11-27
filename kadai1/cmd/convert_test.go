@@ -13,8 +13,8 @@ func TestConvert(t *testing.T) {
 		From string
 		To   string
 	} {
-		{Path: "../sample/test1.png", From: ".jpg", To: ".png"},
-		// {Path: "../sample/sample2/test3.png", From: ".png", To: ".jpg"},
+		// {Path: "../sample/test1.png", From: ".jpg", To: ".png"},
+		{Path: "../sample/sample2/test3.png", From: ".png", To: ".jpg"},
 	}
 
 	for i, v := range testArgs {
