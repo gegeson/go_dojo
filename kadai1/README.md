@@ -34,3 +34,9 @@ sh remove.sh
 ### 参考 code
 
 - [[Go] 画像の拡張子の変更をする CLI コマンドを作る](https://github.com/marnysan111/gopherdojo-studyroom/tree/kadai1-marny/kadai1/marny)
+
+## io.Reader と io.Writer について
+
+io.Reader も io.Writer もインターフェースであり、汎用性が高くさまざまものに利用されている.
+
+- [io.Reader をすこれ](https://qiita.com/ktnyt/items/8ede94469ba8b1399b12)
