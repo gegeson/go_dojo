@@ -48,15 +48,12 @@ func makeQuestion() string {
 }
 
 func input(r io.Reader) <-chan string {
-	fmt.Println("input start")
 	ch := make(chan string)
 	go func()  {
 		s := bufio.NewScanner(r)
 		for s.Scan() {
-		fmt.Println("scan start")
 			ch <- s.Text()
 		}
-		fmt.Println("scan end")
 		close(ch)
 	}()
 	fmt.Println("input end")
@@ -68,6 +65,13 @@ func main() {
 
 	ch1 := input(os.Stdin)
 	point := 0
+
+	go func() {
+		time.After(time.Duration(t) * time.Minute)
+		fmt.Println("時間切れです！")
+		fmt.Printf("pointは%vです\n", point)
+		os.Exit(0)
+	}()
 
 	for {
 		question := makeQuestion()
@@ -82,10 +86,6 @@ func main() {
 				fmt.Println("oh, mistake...")
 				fmt.Println("===============")
 			}
-		case <- time.After(time.Duration(t) * time.Minute):
-			fmt.Println("時間切れです！")
-			fmt.Printf("pointは%vです\n", point)
-			return 
 		}
 	}
 }
